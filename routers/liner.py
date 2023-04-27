@@ -7,6 +7,7 @@ liner_model = Liner.Liner_Model()
 
 @router.get("/liner")
 async def liner(data: int):
+    data: int
     return JSONResponse({
         "code": 200,
         "data": {
