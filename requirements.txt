@@ -5,3 +5,4 @@ torch>=2.0.0
 torchaudio>=0.0.0
 python-multipart
 uvicorn
+tensorflow==2.12.0
