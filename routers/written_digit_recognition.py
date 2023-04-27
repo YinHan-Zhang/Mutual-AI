@@ -12,8 +12,10 @@ router = APIRouter()
 @router.post("/written_digit_recognition")
 async def written_digit_recognition(file: UploadFile):
     print(file.content_type)
+    res, used_time = model.written_digit_recognition.main.recognize(file.file)
     return {
         "filename": file.filename,
-        "res": model.written_digit_recognition.main.recognize(file.file)
+        "res": res,
+        'consume': int(used_time * 1000)
     }
 
