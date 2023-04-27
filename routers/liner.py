@@ -5,8 +5,9 @@ from model import Liner
 router = APIRouter()
 liner_model = Liner.Liner_Model()
 
-@router.get("/liner/{data}")
+@router.get("/liner")
 async def liner(data: int):
+    data: int
     return JSONResponse({
         "code": 200,
         "data": {
