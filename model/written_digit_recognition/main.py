@@ -8,7 +8,6 @@ from torchvision import transforms
 import time
 from torch import nn
 import os
-import pickle
 
 
 class VGGNet(nn.Module):
@@ -74,10 +73,10 @@ if torch.cuda.is_available():
     model.to('cuda')
 
 model.eval()
-start = time.time()
 
 
 def recognize(img):
+    start = time.time()
     img = Image.open(img)
     img = img.resize((28, 28)).convert('L')
 
@@ -106,4 +105,5 @@ def recognize(img):
 
     out = model(img_tensor.unsqueeze(0))
     _, pred = out.max(axis=1)
-    return pred[0].item()
+    end = time.time()
+    return pred[0].item(), end-start
