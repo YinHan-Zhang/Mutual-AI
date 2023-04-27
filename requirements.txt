@@ -3,3 +3,5 @@ pillow>=9.4.0
 torchvision>=0.15.0
 torch>=2.0.0
 torchaudio>=0.0.0
+python-multipart
+uvicorn
