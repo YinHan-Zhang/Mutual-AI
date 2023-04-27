@@ -12,6 +12,7 @@ Mutual-AI致力于在人工智能新时代提供中文交互式AI入门科普，
 - Torchaudio版本>=0.0.0
 - Python-Multipart
 - Uvicorn
+- tensorflow 版本>=2.12.0
 
 ## 运行
 
