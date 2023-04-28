@@ -2,12 +2,16 @@
 # @Time: 2023/04/27
 # @Author:MoyiTech
 # @Software: PyCharm
-from PIL import Image, ImageEnhance
-import torch
-from torchvision import transforms
-import time
-from torch import nn
+import base64
 import os
+import re
+import time
+from io import BytesIO
+
+import torch
+from PIL import Image, ImageEnhance
+from torch import nn
+from torchvision import transforms
 
 
 class VGGNet(nn.Module):
@@ -75,9 +79,20 @@ if torch.cuda.is_available():
 model.eval()
 
 
-def recognize(img):
+def base64_to_image(base64_str, image_path=None):
+    base64_data = re.sub('^data:image/.+;base64,', '', base64_str)
+    byte_data = base64.b64decode(base64_data)
+    image_data = BytesIO(byte_data)
+    img = Image.open(image_data)
+    if image_path:
+        img.save(image_path)
+    return img
+
+
+def recognize(base64_of_img):
     start = time.time()
-    img = Image.open(img)
+    img = base64_to_image(base64_of_img)
+    # img = Image.open(img)
     img = img.resize((28, 28)).convert('L')
 
     # 亮度增强
@@ -106,4 +121,4 @@ def recognize(img):
     out = model(img_tensor.unsqueeze(0))
     _, pred = out.max(axis=1)
     end = time.time()
-    return pred[0].item(), end-start
+    return pred[0].item(), end - start
