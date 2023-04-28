@@ -1,11 +1,21 @@
 # -*- coding = utf-8 -*-
 # @Time: 2023/04/27
 # @Software: PyCharm
-from collections import Counter
+import os
+import pickle
 import math
 import numpy as np
 import tensorflow as tf
 import model.poetry_generator.settings as settings
+
+# 禁用词
+disallowed_words = settings.DISALLOWED_WORDS
+# 句子最大长度
+max_len = settings.MAX_LEN
+# 最小词频
+min_word_frequency = settings.MIN_WORD_FREQUENCY
+# mini batch 大小
+batch_size = settings.BATCH_SIZE
 
 
 class Tokenizer:
@@ -72,60 +82,14 @@ class Tokenizer:
         return ''.join(tokens)
 
 
-# 禁用词
-disallowed_words = settings.DISALLOWED_WORDS
-# 句子最大长度
-max_len = settings.MAX_LEN
-# 最小词频
-min_word_frequency = settings.MIN_WORD_FREQUENCY
-# mini batch 大小
-batch_size = settings.BATCH_SIZE
+def func_without_train():
+    # 加载数据集和词典
+    with open(os.path.join(os.path.dirname(__file__), 'token_id_dict.pkl'), 'rb') as f:
+        token_id_dict = pickle.load(f)
 
-# 加载数据集
-with open(settings.DATASET_PATH, 'r', encoding='utf-8') as f:
-    lines = f.readlines()
-    # 将冒号统一成相同格式
-    lines = [line.replace('：', ':') for line in lines]
-# 数据集列表
-poetry = []
-# 逐行处理读取到的数据
-for line in lines:
-    # 有且只能有一个冒号用来分割标题
-    if line.count(':') != 1:
-        continue
-    # 后半部分不能包含禁止词
-    __, last_part = line.split(':')
-    ignore_flag = False
-    for dis_word in disallowed_words:
-        if dis_word in last_part:
-            ignore_flag = True
-            break
-    if ignore_flag:
-        continue
-    # 长度不能超过最大长度
-    if len(last_part) > max_len - 2:
-        continue
-    poetry.append(last_part.replace('\n', ''))
-
-# 统计词频
-counter = Counter()
-for line in poetry:
-    counter.update(line)
-# 过滤掉低频词
-_tokens = [(token, count) for token, count in counter.items() if count >= min_word_frequency]
-# 按词频排序
-_tokens = sorted(_tokens, key=lambda x: -x[1])
-# 去掉词频，只保留词列表
-_tokens = [token for token, count in _tokens]
-
-# 将特殊词和数据集中的词拼接起来
-_tokens = ['[PAD]', '[UNK]', '[CLS]', '[SEP]'] + _tokens
-# 创建词典 token->id映射关系
-token_id_dict = dict(zip(_tokens, range(len(_tokens))))
-# 使用新词典重新建立分词器
-tokenizer = Tokenizer(token_id_dict)
-# 混洗数据
-np.random.shuffle(poetry)
+    # 使用新词典重新建立分词器
+    tokenizer = Tokenizer(token_id_dict)
+    return tokenizer
 
 
 class PoetryDataGenerator:
@@ -200,3 +164,6 @@ class PoetryDataGenerator:
         while True:
             # 委托生成器
             yield from self.__iter__()
+
+
+tokenizer = func_without_train()
