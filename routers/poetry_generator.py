@@ -3,12 +3,16 @@
 # @Software: PyCharm
 from fastapi import APIRouter
 from model.poetry_generator.main import auto_generate, from_first_sentence, side_head
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
 
 @router.get("/poetry-generator")
 async def poetry_generator(type_choice: int, addition=''):
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
     if type_choice == 1:
         res = auto_generate()
     elif type_choice == 2:
@@ -16,6 +20,6 @@ async def poetry_generator(type_choice: int, addition=''):
     elif type_choice == 3:
         res = side_head(addition)
 
-    return {
+    return JSONResponse({
         "res": res
-    }
+    }, headers=headers)

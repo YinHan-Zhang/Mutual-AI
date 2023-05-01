@@ -28,9 +28,12 @@ app.add_middleware(
 
 @app.get("/")
 async def main():
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
     return JSONResponse({
         "code": 200
-    })
+    }, headers=headers)
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host='0.0.0.0', port=8000)
