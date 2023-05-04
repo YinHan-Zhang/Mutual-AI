@@ -15,4 +15,3 @@ async def liner(data: int):
             "result": liner_model.run(data)
         }
     })
-

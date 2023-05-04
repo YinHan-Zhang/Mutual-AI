@@ -2,7 +2,9 @@
 # @Time: 2023/04/27
 # @Software: PyCharm
 from fastapi import APIRouter
+
 from model.poetry_generator.main import auto_generate, from_first_sentence, side_head
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
@@ -16,6 +18,6 @@ async def poetry_generator(type_choice: int, addition=''):
     elif type_choice == 3:
         res = side_head(addition)
 
-    return {
+    return JSONResponse({
         "res": res
-    }
+    })
