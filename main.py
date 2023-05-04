@@ -8,12 +8,17 @@ app = FastAPI()
 app.docs_url = None
 app.redoc_url = None
 
+origins = [
+    "http://ai.9998k.cn",
+    '127.0.0.1'
+    'null'
+]
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     if request.method != "OPTIONS":
         response = await call_next(request)
-        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Origin"] = origins
         return response
 
 
@@ -23,19 +28,16 @@ app.include_router(poetry_generator.router)
 
 @app.get("/")
 async def main():
-    headers = {
-        "Access-Control-Allow-Origin": "*"
-    }
     return JSONResponse({
         "code": 200
-    }, headers=headers)
+    })
 
 
 @app.options("/{path:path}")
 async def preflight():
     print("here")
     headers = {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": origins,
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "*"
     }

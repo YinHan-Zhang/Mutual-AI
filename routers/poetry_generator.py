@@ -11,9 +11,6 @@ router = APIRouter()
 
 @router.get("/poetry-generator")
 async def poetry_generator(type_choice: int, addition=''):
-    headers = {
-        '': '*'
-    }
     if type_choice == 1:
         res = auto_generate()
     elif type_choice == 2:
@@ -23,4 +20,4 @@ async def poetry_generator(type_choice: int, addition=''):
 
     return JSONResponse({
         "res": res
-    }, headers=headers)
+    })
