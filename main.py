@@ -10,6 +10,7 @@ app = FastAPI()
 app.docs_url = None
 app.redoc_url = None
 
+# 跨域
 origins = [
     "http://ai.9998k.cn",
     '127.0.0.1',
@@ -23,6 +24,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(liner.router)
 app.include_router(written_digit_recognition.router)
