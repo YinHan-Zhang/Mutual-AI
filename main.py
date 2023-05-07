@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from routers import liner, written_digit_recognition, poetry_generator
+from routers import liner, written_digit_recognition, poetry_generator, Chinese_Text_Classification_Pytorch
 
 app = FastAPI()
 
@@ -27,6 +27,7 @@ app.add_middleware(
 app.include_router(liner.router)
 app.include_router(written_digit_recognition.router)
 app.include_router(poetry_generator.router)
+app.include_router(Chinese_Text_Classification_Pytorch.router)
 
 
 @app.get("/")
