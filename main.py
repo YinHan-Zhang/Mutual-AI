@@ -33,7 +33,6 @@ async def main():
 
 @app.options("/{path:path}")
 async def preflight():
-    print("here")
     headers = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*",
