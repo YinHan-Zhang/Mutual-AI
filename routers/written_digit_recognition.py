@@ -14,6 +14,7 @@ class Item(BaseModel):
     img: str
 
 
+# 接收base64编码后的二进制流处理后返回数据
 @router.post("/written_digit_recognition")
 async def written_digit_recognition(item: Item):
     res, used_time = model.written_digit_recognition.main.recognize(item.img)

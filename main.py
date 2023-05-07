@@ -8,12 +8,12 @@ app = FastAPI()
 app.docs_url = None
 app.redoc_url = None
 
-
 origins = [
-    "api.9998k.cn",
-    "127.0.0.1",
-    "null"
+    "http://ai.9998k.cn",
+    '127.0.0.1'
+    'null'
 ]
+
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
@@ -26,6 +26,7 @@ async def add_process_time_header(request: Request, call_next):
 app.include_router(liner.router)
 app.include_router(written_digit_recognition.router)
 app.include_router(poetry_generator.router)
+
 
 @app.get("/")
 async def main():
