@@ -29,6 +29,8 @@ app.include_router(written_digit_recognition.router)
 app.include_router(poetry_generator.router)
 app.include_router(Chinese_Text_Classification_Pytorch.router)
 app.include_router(super_resolution_master.router)
+# app.include_router(watermark_removel.router)
+# 由于tensorflow 使用的1.14版本 与main函数其他模型不兼容先不导进来
 
 
 @app.get("/")
