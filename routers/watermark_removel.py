@@ -11,9 +11,8 @@ class Item(BaseModel):
 
 
 @router.post("/")
-async def written_digit_recognition(item: Item):
-    res, used_time = model.watermark_removal.main.recognize(item.img)
+async def watermark_removal(item: Item):
+    res = model.watermark_removal.main.recognize(item.img)
     return JSONResponse({
         "res": res,
-        'consume': int(used_time * 1000)
     })

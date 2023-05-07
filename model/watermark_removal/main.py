@@ -20,15 +20,12 @@ parser.add_argument('--checkpoint_dir', default='model/', type=str,
                     help='The directory of tensorflow checkpoint.')
 
 checkpoint_dir = 'model/'
-
-
-if __name__ == "__main__":
-
+def watermark_removel(input_image):
     FLAGS = ng.Config('inpaint.yml')
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
-    args.image = input("图片地址")
-    args.output = input("输出地址")
+    args.image = input_image
+    # args.output = input("输出地址")
     model = InpaintCAModel()
     image = Image.open(args.image)
     input_image = preprocess_image(image, args.watermark_type)
@@ -55,6 +52,7 @@ if __name__ == "__main__":
             sess.run(assign_ops)
             print('Model loaded.')
             result = sess.run(output)
-            cv2.imwrite(args.output, cv2.cvtColor(
+            return cv2.imwrite(args.output, cv2.cvtColor(
                 result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
             print('image saved to {}'.format(args.output))
+
