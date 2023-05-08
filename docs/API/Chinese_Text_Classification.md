@@ -7,10 +7,13 @@
 
 
 
-json回复：
+json回复：数字对应label
+
+[finance,realty,stocks,education,science,society,politics,sports,game,entertainment]
+
 
 根对象：
 
-| 字段 | 类型 | 内容     | 备注 |
-| ---- | ---- | -------- | ---- |
-| res  | str  | 返回内容 |      |
+| 字段 | 类型  | 内容     | 备注 |
+|----|-----| -------- | ---- |
+| 数字 | int | 返回内容 |      |
