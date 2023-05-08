@@ -3,7 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from routers import liner, written_digit_recognition, poetry_generator, Chinese_Text_Classification_Pytorch, super_resolution_master
+from routers import liner, written_digit_recognition, poetry_generator, Chinese_Text_Classification_Pytorch,watermark_removel
+# from routers import watermark_removel
 
 app = FastAPI()
 
@@ -28,10 +29,8 @@ app.include_router(liner.router)
 app.include_router(written_digit_recognition.router)
 app.include_router(poetry_generator.router)
 app.include_router(Chinese_Text_Classification_Pytorch.router)
-app.include_router(super_resolution_master.router)
-# app.include_router(watermark_removel.router)
+# app.include_router(watermark_removel.watermark_removel)
 # 由于tensorflow 使用的1.14版本 与main函数其他模型不兼容先不导进来
-
 
 @app.get("/")
 async def main():
