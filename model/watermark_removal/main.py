@@ -10,7 +10,7 @@ import neuralgym as ng
 import base64
 import re
 from io import BytesIO
-from PIL import Image
+
 
 from inpaint_model import InpaintCAModel
 
@@ -65,11 +65,9 @@ def watermark_removel(input_Image):
                 assign_ops.append(tf.assign(var, var_value))
             sess.run(assign_ops)
             print('Model loaded.')
+            # 别问 问就是拿GPT写的
             result = sess.run(output)
-            img = cv2.imdecode(result, cv2.IMREAD_COLOR)
-            result_2 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img_bytes = cv2.imencode('.jpg', result_2)[1].tobytes()
-            return StreamingResponse(BytesIO(img_bytes), media_type="image/jpeg")
+            return result
             # return cv2.imwrite(args.output, cv2.cvtColor(
             #     result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
 
