@@ -11,9 +11,10 @@ app.docs_url = None
 app.redoc_url = None
 
 origins = [
-    "http://ai.9998k.cn",
+    "ai.9998k.cn",
     '127.0.0.1',
-    'null'
+    'null',
+    '*'
 ]
 
 app.add_middleware(
@@ -41,4 +42,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host='127.0.0.1', port=8000)
+    uvicorn.run('main:app', host='0.0.0.0', port=8000)
