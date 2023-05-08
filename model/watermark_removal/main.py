@@ -2,21 +2,12 @@ import argparse
 
 from PIL import Image
 import cv2
-
-import sys
-
+import numpy as np
+from preprocess_image import preprocess_image
 import tensorflow as tf
 import neuralgym as ng
-import base64
-import re
-from io import BytesIO
 
-sys.path.append('model/watermark_removal')
 from inpaint_model import InpaintCAModel
-
-from preprocess_image import preprocess_image
-
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', default='', type=str,
@@ -29,23 +20,12 @@ parser.add_argument('--checkpoint_dir', default='model/', type=str,
                     help='The directory of tensorflow checkpoint.')
 
 checkpoint_dir = 'model/'
-
-def base64_to_image(base64_str, image_path=None):
-    base64_data = re.sub('^data:image/.+;base64,', '', base64_str)
-    byte_data = base64.b64decode(base64_data)
-    image_data = BytesIO(byte_data)
-    img = Image.open(image_data)
-    if image_path:
-        img.save(image_path)
-    return img
-
-def watermark_removel(input_Image):
-    print(12)
+def watermark_removel(input_image):
     FLAGS = ng.Config('inpaint.yml')
-    print(2)
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
-    args.image = base64_to_image(input_Image)
+    args.image = input_image
+    # args.output = input("输出地址")
     model = InpaintCAModel()
     image = Image.open(args.image)
     input_image = preprocess_image(image, args.watermark_type)
@@ -71,10 +51,8 @@ def watermark_removel(input_Image):
                 assign_ops.append(tf.assign(var, var_value))
             sess.run(assign_ops)
             print('Model loaded.')
-            # 别问 问就是拿GPT写的
             result = sess.run(output)
-            return result
-            # return cv2.imwrite(args.output, cv2.cvtColor(
-            #     result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
-
+            return cv2.imwrite(args.output, cv2.cvtColor(
+                result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
+            print('image saved to {}'.format(args.output))
 
