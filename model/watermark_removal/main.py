@@ -2,17 +2,21 @@ import argparse
 
 from PIL import Image
 import cv2
-from starlette.responses import StreamingResponse
 
-from preprocess_image import preprocess_image
+import sys
+
 import tensorflow as tf
 import neuralgym as ng
 import base64
 import re
 from io import BytesIO
 
-
+sys.path.append('model/watermark_removal')
 from inpaint_model import InpaintCAModel
+
+from preprocess_image import preprocess_image
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', default='', type=str,
@@ -36,7 +40,9 @@ def base64_to_image(base64_str, image_path=None):
     return img
 
 def watermark_removel(input_Image):
+    print(12)
     FLAGS = ng.Config('inpaint.yml')
+    print(2)
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
     args.image = base64_to_image(input_Image)
