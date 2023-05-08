@@ -11,9 +11,10 @@ app.docs_url = None
 app.redoc_url = None
 
 origins = [
-    "http://ai.9998k.cn",
+    "ai.9998k.cn",
     '127.0.0.1',
-    'null'
+    'null',
+    '*'
 ]
 
 app.add_middleware(
