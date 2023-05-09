@@ -2,7 +2,7 @@
 # @Time: 2023/05/07
 # @Author:XiLinky
 # @Software: PyCharm
-from routers.super_resolution_master import resolve_and_plot
+from model.super_resolution_master.example_edsr import resolve_and_plot
 from fastapi import APIRouter
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse

@@ -41,6 +41,33 @@ def base64_to_image(base64_str, image_path=None):
     #     img.save(image_path)
     # return img
 
+
+def pil_base64(img, coding='utf-8'):
+    img_format = img.format
+    if img_format == None:
+        img_format = 'JPEG'
+
+    format_str = 'JPEG'
+    if 'png' == img_format.lower():
+        format_str = 'PNG'
+    if 'gif' == img_format.lower():
+        format_str = 'gif'
+
+    if img.mode == "P":
+        img = img.convert('RGB')
+    if img.mode == "RGBA":
+        format_str = 'PNG'
+        img_format = 'PNG'
+
+    output_buffer = BytesIO()
+    # img.save(output_buffer, format=format_str)
+    img.save(output_buffer, quality=100, format=format_str)
+    byte_data = output_buffer.getvalue()
+    base64_str = 'data:image/' + img_format.lower() + ';base64,' + base64.b64encode(byte_data).decode(coding)
+
+    return base64_str
+
+
 def watermark_removel(input_Image):
     print(12)
     # FLAGS = ng.Config('inpaint.yml')
@@ -50,7 +77,7 @@ def watermark_removel(input_Image):
     args, unknown = parser.parse_known_args()
     image_input = base64_to_image(input_Image)
     model = InpaintCAModel()
-    image = Image.open(image_input)
+    image = Image.open(image_input).convert('RGB')
     input_image = preprocess_image(image, args.watermark_type)
     tf.reset_default_graph()
 
@@ -76,7 +103,10 @@ def watermark_removel(input_Image):
             print('Model loaded.')
             # 别问 问就是拿GPT写的
             result = sess.run(output)
-            return result
+            # print(type(result))
+            img = Image.fromarray(result[0][:, :, ::-1])
+            res = pil_base64(img)
+            return res
             # return cv2.imwrite(args.output, cv2.cvtColor(
             #     result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
 
