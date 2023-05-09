@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 import cv2
-
+import os
 
 def preprocess_image(image, watermark_type):
     image_type: str = ''
@@ -22,7 +22,7 @@ def preprocess_image(image, watermark_type):
         image_type = "potrait"
 
     mask_image = Image.open(
-        "utils/{}/{}/mask.png".format(watermark_type, image_type))
+        (os.path.join(os.path.dirname(__file__), "utils/{}/{}/mask.png")).format(watermark_type, image_type))
     if mask_image.mode != "RGB":
         mask_image = mask_image.convert("RGB")
     mask_image = np.array(mask_image)

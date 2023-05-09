@@ -1,7 +1,8 @@
 import argparse
+import os.path
 
 from PIL import Image
-import cv2
+
 
 import sys
 
@@ -13,7 +14,7 @@ from io import BytesIO
 
 sys.path.append('model/watermark_removal')
 from inpaint_model import InpaintCAModel
-
+import cv2
 from preprocess_image import preprocess_image
 
 
@@ -34,20 +35,22 @@ def base64_to_image(base64_str, image_path=None):
     base64_data = re.sub('^data:image/.+;base64,', '', base64_str)
     byte_data = base64.b64decode(base64_data)
     image_data = BytesIO(byte_data)
-    img = Image.open(image_data)
-    if image_path:
-        img.save(image_path)
-    return img
+    return image_data
+    # img = Image.open(image_data)
+    # if image_path:
+    #     img.save(image_path)
+    # return img
 
 def watermark_removel(input_Image):
     print(12)
-    FLAGS = ng.Config('inpaint.yml')
+    # FLAGS = ng.Config('inpaint.yml')
+    FLAGS = ng.Config(os.path.join(os.path.dirname(__file__), 'inpaint.yml'))
     print(2)
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
-    args.image = base64_to_image(input_Image)
+    image_input = base64_to_image(input_Image)
     model = InpaintCAModel()
-    image = Image.open(args.image)
+    image = Image.open(image_input)
     input_image = preprocess_image(image, args.watermark_type)
     tf.reset_default_graph()
 
@@ -67,7 +70,7 @@ def watermark_removel(input_Image):
                 vname = var.name
                 from_name = vname
                 var_value = tf.contrib.framework.load_variable(
-                    args.checkpoint_dir, from_name)
+                    (os.path.join(os.path.dirname(__file__), 'model/')), from_name)
                 assign_ops.append(tf.assign(var, var_value))
             sess.run(assign_ops)
             print('Model loaded.')
