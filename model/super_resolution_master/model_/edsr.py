@@ -2,7 +2,7 @@ from tensorflow.python.keras.layers import Add, Conv2D, Input, Lambda
 from tensorflow.python.keras.models import Model
 
 
-from routers.super_resolution_master import normalize, denormalize, pixel_shuffle
+from model.super_resolution_master.model_.common import normalize, denormalize, pixel_shuffle
 
 
 def edsr(scale, num_filters=64, num_res_blocks=8, res_block_scaling=None):

@@ -2,7 +2,7 @@
 # @Time: 2023/05/07
 # @Author:XiLinky
 # @Software: PyCharm
-from model.super_resolution_master.example_edsr import resolve_and_plot
+import model.super_resolution_master.example_edsr
 from fastapi import APIRouter
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
@@ -16,7 +16,7 @@ class Item(BaseModel):
 
 @router.post("/super-resolution-master")
 async def super_resolution_master(item: Item):
-    sr = resolve_and_plot(item.img)
+    sr = model.super_resolution_master.example_edsr.resolve_and_plot(item.img)
     return JSONResponse({
         "img": sr
     })
