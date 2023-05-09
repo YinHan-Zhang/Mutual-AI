@@ -2,7 +2,6 @@
 # coding: utf-8
 import base64
 import os
-import pickle
 import re
 from io import BytesIO
 
@@ -12,10 +11,10 @@ import numpy as np
 from PIL import Image
 
 # from data import DIV2K
-from routers.super_resolution_master import edsr
+from model.super_resolution_master.model_.edsr import edsr
 # from train import EdsrTrainer
-from routers.super_resolution_master import resolve_single
-from routers.super_resolution_master import load_image, plot_sample
+from model.super_resolution_master.model_.common import resolve_single
+from model.super_resolution_master.utils import load_image, plot_sample
 
 depth = 16
 scale = 4
