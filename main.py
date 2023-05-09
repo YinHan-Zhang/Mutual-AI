@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from routers import liner, written_digit_recognition, poetry_generator, Chinese_Text_Classification_Pytorch, super_resolution_master
-
+# from routers import watermark_removel
 app = FastAPI()
 
 app.docs_url = None
@@ -24,7 +24,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+#
 app.include_router(liner.router)
 app.include_router(written_digit_recognition.router)
 app.include_router(poetry_generator.router)
