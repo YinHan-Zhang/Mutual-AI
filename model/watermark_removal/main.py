@@ -68,6 +68,9 @@ def pil_base64(img, coding='utf-8'):
     return base64_str
 
 
+model = InpaintCAModel()
+print('Model loaded.')
+
 def watermark_removel(input_Image):
     print(12)
     # FLAGS = ng.Config('inpaint.yml')
@@ -76,7 +79,7 @@ def watermark_removel(input_Image):
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
     image_input = base64_to_image(input_Image)
-    model = InpaintCAModel()
+    # model = InpaintCAModel()
     image = Image.open(image_input).convert('RGB')
     input_image = preprocess_image(image, args.watermark_type)
     tf.reset_default_graph()
@@ -100,14 +103,12 @@ def watermark_removel(input_Image):
                     (os.path.join(os.path.dirname(__file__), 'model/')), from_name)
                 assign_ops.append(tf.assign(var, var_value))
             sess.run(assign_ops)
-            print('Model loaded.')
+
             # 别问 问就是拿GPT写的
             result = sess.run(output)
             # print(type(result))
             img = Image.fromarray(result[0][:, :, ::-1])
             res = pil_base64(img)
             return res
-            # return cv2.imwrite(args.output, cv2.cvtColor(
-            #     result[0][:, :, ::-1], cv2.COLOR_BGR2RGB))
 
 
