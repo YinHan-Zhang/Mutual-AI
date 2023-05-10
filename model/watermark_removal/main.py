@@ -14,7 +14,7 @@ from io import BytesIO
 
 sys.path.append('model/watermark_removal')
 from inpaint_model import InpaintCAModel
-import cv2
+
 from preprocess_image import preprocess_image
 
 
@@ -72,10 +72,8 @@ model = InpaintCAModel()
 print('Model loaded.')
 
 def watermark_removel(input_Image):
-    print(12)
     # FLAGS = ng.Config('inpaint.yml')
     FLAGS = ng.Config(os.path.join(os.path.dirname(__file__), 'inpaint.yml'))
-    print(2)
     # ng.get_gpus(1)
     args, unknown = parser.parse_known_args()
     image_input = base64_to_image(input_Image)
