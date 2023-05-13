@@ -78,7 +78,8 @@ def watermark_removel(input_Image):
     args, unknown = parser.parse_known_args()
     image_input = base64_to_image(input_Image)
     # model = InpaintCAModel()
-    image = Image.open(image_input).convert('RGB')
+    image = Image.open(image_input).resize((512, 341)).convert('RGB')
+
     input_image = preprocess_image(image, args.watermark_type)
     tf.reset_default_graph()
 
