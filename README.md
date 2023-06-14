@@ -2,18 +2,17 @@
 
 ![Image text](https://raw.github.com/YinHan-Zhang/Mutual-AI/master/img/AI-pic2.jpg)
 
-Mutual-AI致力于在人工智能新时代提供中文交互式AI入门科普
-
+Mutual-AI is committed to providing introductory Chinese-language interactive AI science popularization in the new era of artificial intelligence.
 --- 
 
 ## Sloving Problems:
-1. 当前人工领域机器学习、深度学习算法学习过程中理论知识的枯燥乏味问题
-2. 小白在上手学习过程遇到的 “黑盒子问题”
+1. The problem of the dry and boring theoretical knowledge in the learning process of machine learning and deep learning algorithms in the current field of artificial intelligence.
+2. The "black box problem" encountered by novices in the hands-on learning process.
 
 ## Things We are doing :
 
-1. 增加AI学习过程中的趣味性，我们寻找了很多充满趣味性的且简单易上手的项目，在线演示体验
-2. 解决“黑盒子”问题，详细解析项目的实现原理，帮助小白快速学习理解
+1. To increase the fun of learning AI, we have searched for many interesting and easy-to-use projects with online demonstration experiences.
+2. To solve the "black box problem", we provide detailed explanations of the implementation principles of the projects, helping novices to quickly learn and understand.
 
 ![Image text](https://raw.github.com/YinHan-Zhang/Mutual-AI/master/img/AI-pic3.jpg)
 
